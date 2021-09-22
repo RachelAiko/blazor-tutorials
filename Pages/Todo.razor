@@ -1,0 +1,45 @@
+﻿@page "/todo"
+
+
+<!-- Title of Page -->
+<h1>Rachel's Todo List (@todos.Count(todo => !todo.IsDone))</h1>
+<ul>
+
+	<!-- Loop to render each todo item as a list item-->
+    @foreach (var todo in todos)
+    {
+       <li>
+			<!-- Adds checkbox input for each todo item and binds--> <!-- its value to the IsDone property. -->
+            <input type="checkbox" @bind="todo.IsDone" />
+            <input @bind="todo.Title" />
+        </li>
+    }
+</ul>
+
+<!-- Text in input space. Uses @bind atrribute -->
+<input placeholder="Add Something todo" @bind="newTodo" />
+
+<!-- Button to add item to list unsing @onclick attribute. -->
+<button @onclick ="AddTodo">Add todo</button>
+
+
+@code {
+
+	private List<TodoItem> todos = new();
+	private string newTodo;  // Title of new todo item.
+	
+	// When button is clicked this method is called.
+	private void AddTodo()
+    {
+        // Clears the value of the text inuput by setting newTodo to an empty string.
+		 if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+	
+	
+}
+<h3>One thing at a time</h3>
+
